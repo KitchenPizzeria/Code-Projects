@@ -4,6 +4,7 @@ import tkinter.ttk as ttk
 import sqlite3
 import datetime
 import re
+import Selenium
 
 
 BUTTON_FONT = ("Georgia",16)
