@@ -5,7 +5,6 @@ import sqlite3
 import datetime
 import re
 
-
 BUTTON_FONT = ("Georgia",16)
 TITLE_FONT = ("Georgia",28)
 
