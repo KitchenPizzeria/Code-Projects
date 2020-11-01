@@ -1,8 +1,9 @@
 import socket
 import pickle
 
+HEADER = 64
 HOST = socket.gethostbyname(socket.gethostname())
-PORT = 5005
+PORT = 5000
 ADDR = (HOST,PORT)
 FORMAT = "utf-8"
 DISCONNECT_MESSAGE = "!Disconnect"
@@ -30,7 +31,5 @@ while True:
 	conn.send(bytes(reply))
 	print(f"[RETURNED] Edits made and dictionary has been returned")
 	conn.close()
-
-
 
 

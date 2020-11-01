@@ -1,4 +1,5 @@
 import socket
+<<<<<<< HEAD
 import pickle
 
 def Main():
@@ -33,6 +34,24 @@ def Main():
 	# 	msg = input("-> ")
 
 	# s.close()
+=======
+
+def Main():
+	host = "127.0.0.1"
+	port = 5000
+
+	s = socket.socket()
+	s.connect((host,port))
+
+	msg = input("-> ")
+	while msg != "q":
+		s.send(bytes(msg))
+		data = s.recv(1024)
+		print(f"Received from server: {str(data)}")
+		msg = input("-> ")
+
+	s.close()
+>>>>>>> 1388b24303d9d1571326f1719e61470cd3f5fc42
 		
 	
 
