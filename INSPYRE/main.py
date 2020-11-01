@@ -1,9 +1,12 @@
-from tkinter import Frame,Tk
+from flask import Flask, render_template, url_for
 
-class Window(Frame):
-	def __init__(self, window):
-		Frame.__init__(self)
+app = Flask(__name__)
 
-root = Tk()
-App = Window(root)
-root.mainloop()
+@app.route("/")
+def home():
+	return "This is a test"
+
+	#return render_template("index.html")
+
+if __name__ == "__main__":
+	app.run(debug=True)

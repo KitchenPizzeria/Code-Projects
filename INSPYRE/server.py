@@ -1,39 +1,36 @@
 import socket
-from socket import gethostbyname
-import threading
+import pickle
 
-HEADER = 64
 HOST = socket.gethostbyname(socket.gethostname())
-PORT = 5000
+PORT = 5005
 ADDR = (HOST,PORT)
 FORMAT = "utf-8"
 DISCONNECT_MESSAGE = "!Disconnect"
 
+print("[STARTING] server is starting...")
+
 server = socket.socket()
 server.bind((HOST,PORT))
+server.listen(4)
 
-def Start():
-	server.listen(1)
-	print(f"[LISTENING] server is on {HOST}")
-	while True:
-		c, addr = server.accept()
-		thread = threading.Thread(target=ClientHandling,args=(c,addr))
-		thread.start()
-		print(f"[ACTIVE CONNECTIONS] {threading.activeCount()-1}")
+print(f"[LISTENING] server is on {HOST}")
 
-def ClientHandling(conn,addr):
+while True:
+	conn, addr = server.accept()
 	print(f"[NEW CONNECTION] from {addr}")
 
-	while True:
-		msg_length = conn.recv(HEADER).decode(FORMAT)
-		msg_length = int(msg_length)
-		msg = conn.recv(msg_length).decode(FORMAT)
-		print(f"[{addr}] {msg}")
-		if msg == DISCONNECT_MESSAGE:
-			break 
-	
+	pickled_msg = conn.recv(1024)
+	msg = pickle.loads(pickled_msg)
+	print(f"[RECEIVED] Received from client: {msg}")
+
+	raw_reply = dict(msg).update({"Age": 21})
+	print(raw_reply)
+	reply = pickle.dumps(raw_reply)
+	print(f'[DEBUG] reply = {reply}')
+	conn.send(bytes(reply))
+	print(f"[RETURNED] Edits made and dictionary has been returned")
 	conn.close()
 
-print("[STARTING] server is starting...")
-Start()
+
+
 
